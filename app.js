@@ -11,7 +11,25 @@ const server = http.createServer((req, res) => {
   let parsedURL = url.parse(req.url, true);
   let path = parsedURL.pathname;
 
-  if (path === '/'){    
+
+  let paths = [ '/', '/ian-beard.html', '/eric-sergio.html', '/thaianhvu', '/chitalumumba' ];
+  let pathnames = ['./index.html', './ian-beard.html', './eric-sergio.html', './thaianh-vu.html', './chitalu-mumba.html' ];
+
+  for(p in paths){
+    if (path === paths[p]) {
+      fs.readFile(pathnames[p], null, function(error, data) {
+        if(error) {
+          res.writeHead(404);
+          res.write('File Not Found');
+        } else {
+          res.write(data)
+        }
+        res.end();
+      })
+    }
+  }
+
+  /*if (path === '/'){    
     fs.readFile('./index.html', null, function(error, data) {  
       if (error){
           res.writeHead(404);
@@ -64,8 +82,9 @@ const server = http.createServer((req, res) => {
       }
       res.end();
     })
-  }
+  }*/
 });
+
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
