@@ -11,60 +11,18 @@ const server = http.createServer((req, res) => {
   let parsedURL = url.parse(req.url, true);
   let path = parsedURL.pathname;
 
-  if (path === '/'){    
-    fs.readFile('./index.html', null, function(error, data) {  
-      if (error){
-          res.writeHead(404);
-          res.write('File not found!');
-      }else{
-          res.write(data);
-      }
-      res.end();
-    })
-  }
-  else if (path === '/ianbeard'){
-    fs.readFile('./ian-beard.html', null, function(error, data) {  
-      if (error){
-          res.writeHead(404);
-          res.write('File not found!');
-      }else{
-          res.write(data);
-      }
-      res.end();
-    })
-  }
-  else if (path === '/ericsergio'){
-    fs.readFile('./eric-sergio.html', null, function(error, data) {  
-      if (error){
-          res.writeHead(404);
-          res.write('File not found!');
-      }else{
-          res.write(data);
-      }
-      res.end();
-    })
-  }
-  else if (path === '/thaianhvu'){
-    fs.readFile('./thaianh-vu.html', null, function(error, data) {  
-      if (error){
-          res.writeHead(404);
-          res.write('File not found!');
-      }else{
-          res.write(data);
-      }
-      res.end();
-    })
-  } else if (path === '/chitalumumba'){
-    fs.readFile('./chitalu-mumba.html', null, function(error, data) {  
-      if (error){
-          res.writeHead(404);
-          res.write('File not found!');
-      }else{
-          res.write(data);
-      }
-      res.end();
-    })
-  }
+  let urlString = (path === "/") ? "./index.html" : `.${path}.html`;
+
+  fs.readFile(urlString, null, function(error, data) {  
+    if (error){
+        res.writeHead(404);
+        res.write('File not found!');
+    }else{
+        res.write(data);
+    }
+    res.end();
+  })
+  
 });
 
 server.listen(port, hostname, () => {
